@@ -124,8 +124,6 @@ Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
 DPcal=(NPV+NPQ);
-Pcalculadas=zeros(DPcal,1);   %%Todas las P calculadas vector columna [P]
-Qcalculadas=zeros(DPcal,1);   %%Todas las Q calculadas vector columna [Q]
 %Creando matrizes para almacenar los valores actualizados de magnitud y
 %angulo de tension
 %CREANDO VECTOR DE POTENCIAS INICIALES
@@ -149,10 +147,8 @@ F=1; %Controla la posicion de las filas del jacobiano
 for j=1:FN
     if N(j,2)==2||N(j,2)==1
         for t=1:FN
-            if real(Ybarra(j,t))~=0 && imag(Ybarra(j,t))~=0                                                                                 %Con este if solo se corrige 1 excepcion faltan 3 para p y 3 para Q 
         P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));% hallando P calculada. El valor de p calculada queda en Pn y no en P
         Pn(i,1)=P(i,1)+Pn(i,1);
-            end
         end
         i=i+1;
     end
@@ -164,7 +160,7 @@ for j=1:FN
                     JA(F,Q)=1; %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
-                    JA(F,Q)=11; %Calcula valores de la triangula superior y inferior de la matriz H 
+                    JA(F,Q)=-Qcalculadas(F,1)-imag(Ybarra(j,j))*(N(j,7))^2; %Calcula valores de la triangula superior y inferior de la matriz H 
                 end                
             Q=1+Q;
              end
@@ -242,5 +238,3 @@ for i=1:FN
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-Pcalculadas %% vector de potencias activas calculadas [P]
-Qcalculadas %% vector de potencias reactivas calculadas [Q]
