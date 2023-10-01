@@ -92,12 +92,13 @@ for j=1 :FN  % Se crea la matriz de potencias y su dimencion depende de el # de 
         NPV=NPV+1;
     end
 end
-magnitud=2*(NPQ+NPV);
+magnitud=(NPQ+NPV);
 P=zeros(FP,1);
 Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
-Piny=zeros(magnitud,1);
+Pcalculadas=zeros(magnitud,1);
+Qcalculadas=zeros(magnitud,1);
 %Creando matrizes para almacenar los valores actualizados de magnitud y
 %angulo de tension
 %CREANDO VECTOR DE POTENCIAS INICIALES
@@ -123,7 +124,7 @@ for j=1:FN
       if N(j,2)==1 || N(j,2)==2 
   for t=1:FN
        P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));
-  Piny(i,1)=P(i,1)+Piny(i,1);
+  Pcalculadas(i,1)=P(i,1)+Pcalculadas(i,1);
   end
       end
     if N(j,2)==2||N(j,2)==1
@@ -179,9 +180,10 @@ end
 for j=1:FN
     if N(j,2)==1 || N(j,2)==2 
        for t=1:FN  
-  P(i,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
-  Piny(i,1)=P(i,1)+Piny(i,1);
-   end  
+  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
+       end
+       m=m+1;
     end
 
     if N(j,2)==2
@@ -200,6 +202,7 @@ VA=VAN;
 V0=V0N;
 deltaP
 JA %% Matriz jacobinana1
-Piny
 Pn
+Pcalculadas
+Qcalculadas
 end
