@@ -180,6 +180,5 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 deltaP
-JA
-JA=JA+20
+JA %% Matriz jacobinana
 end
