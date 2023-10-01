@@ -123,8 +123,9 @@ P=zeros(FP,1);
 Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
-DPcal=2*(NPV+NPQ);
-Pcalculadas=zeros(DPcal,1);   %%Todas las P y todas las Q calculadas vector columna con el siguiente orde [P,Q]
+DPcal=(NPV+NPQ);
+Pcalculadas=zeros(DPcal,1);   %%Todas las P calculadas vector columna [P]
+Qcalculadas=zeros(DPcal,1);   %%Todas las Q calculadas vector columna [Q]
 %Creando matrizes para almacenar los valores actualizados de magnitud y
 %angulo de tension
 %CREANDO VECTOR DE POTENCIAS INICIALES
@@ -163,7 +164,7 @@ for j=1:FN
                     JA(F,Q)=1; %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
-                    JA(F,Q)=12; %Calcula valores de la triangula superior y inferior de la matriz H 
+                    JA(F,Q)=11; %Calcula valores de la triangula superior y inferior de la matriz H 
                 end                
             Q=1+Q;
              end
@@ -241,4 +242,5 @@ for i=1:FN
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-Pcalculadas %% vector de potencias todas las potencias calculadas [P,Q]
+Pcalculadas %% vector de potencias activas calculadas [P]
+Qcalculadas %% vector de potencias reactivas calculadas [Q]
