@@ -14,6 +14,34 @@ clc;clear;
 %     N(K,2)=input('');
 % end
 % for K=1:nodos
+% if N(K,2)==0
+%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+%     N(K,7)=input('');
+%     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
+%     N(K,8)=input('')
+% end 
+% if N(K,2)==1
+%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+%     N(K,7)=input('');
+%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+%     N(K,5)=input('');
+%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+%     N(K,6)=input('');
+%     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
+%     N(K,3)=input('');
+%     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
+%     N(K,4)=input('');
+% end 
+% if N(K,2)==2
+%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+%     N(K,5)=input('');
+%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+%     N(K,6)=input('');
+%     fprintf('ingrese la potencia activa generada (generacion distribuida) en el nodo %i:',K);
+%     N(K,3)=input('');
+%     fprintf('ingrese la potencia reactiva generada (generacion distribuida) en el nodo%i:',K);
+%     N(K,4)=input('');
+% end 
 %     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
 %     N(K,3)=input('');
 %     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
@@ -25,7 +53,7 @@ clc;clear;
 %     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
 %     N(K,7)=input('');
 %     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
-%     N(K,8)=input('');
+%     N(K,8)=input('');  
 % end
 % 
 % for k=1:lineas
@@ -181,4 +209,5 @@ VA=VAN;
 V0=V0N;
 deltaP
 JA %% Matriz jacobinana
+P
 end
