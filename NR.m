@@ -150,6 +150,14 @@ i=1;% Contador para llevar la cuenta de los numeros que colocan en la matriz P
 F=1; %Controla la posicion de las filas del jacobiano
 m=1;
 for j=1:FN
+
+        if N(j,2)==1 || N(j,2)==2 
+       for t=1:FN  
+  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
+       end
+       m=m+1;
+    end
       if N(j,2)==1 || N(j,2)==2 
   for t=1:FN
        P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));
@@ -168,7 +176,7 @@ for j=1:FN
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
                 if j==t
-                    JA(F,Q)=-Qcalculadas(F,1)-imag(Ybarra(j,j))*(N(j,7))^2; %Calcula valores de la diagonal de la matriz H 
+                    JA(F,Q)=-Qcalculadas(F,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
                     JA(F,Q)=1; %Calcula valores de la triangula superior y inferior de la matriz H 
@@ -179,10 +187,10 @@ for j=1:FN
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
-                    JA(F,Q)=2; %Calcula valores de la diagonal de la matriz N 
+                    JA(F,Q)=2; %Calcula valores de la diagonal de la matriz N crow
                 end
                 if j~=t
-                    JA(F,Q)=22; %Calcula valores de la triangula superior y inferior de la matriz N
+                    JA(F,Q)=22; %Calcula valores de la triangula superior y inferior de la matriz N crow
                 end 
                     Q=1+Q;
              end
@@ -198,10 +206,10 @@ for j=1:FN
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
                 if j==t
-                    JA(F,Q)=3; %Calcula valores de la diagonal de la matriz J
+                    JA(F,Q)=3; %Calcula valores de la diagonal de la matriz J crow
                 end
                 if j~=t
-                    JA(F,Q)=33; %Calcula valores de la triangula superior y inferior de la matriz J
+                    JA(F,Q)=33; %Calcula valores de la triangula superior y inferior de la matriz J crow
                 end
             Q=1+Q;
              end
@@ -212,7 +220,7 @@ for j=1:FN
                     JA(F,Q)=4; %Calcula valores de la diagonal de la matriz L
                 end
                 if j~=t
-                    JA(F,Q)=44; %Calcula valores de la triangula superior y inferior de la matriz L
+                    JA(F,Q)=44; %Calcula valores de la triangula superior y inferior de la matriz L 
                 end
                     Q=1+Q;
              end
@@ -224,14 +232,6 @@ end
 %_______________________________
 
 for j=1:FN
-    if N(j,2)==1 || N(j,2)==2 
-       for t=1:FN  
-  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
-  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
-       end
-       m=m+1;
-    end
-
     if N(j,2)==2
          for t=1:FN
                                                                                              %Faltan restricciones
@@ -252,10 +252,9 @@ JA %% Matriz jacobinana1
 Pn
 Pcalculadas
 Qcalculadas
-%%c
+
 end
 Po
-end
 for i=1:FN
     for t=1:FN
         Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
