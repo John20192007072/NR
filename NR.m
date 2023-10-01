@@ -123,6 +123,8 @@ P=zeros(FP,1);
 Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
+DPcal=2*(NPV+NPQ);
+Pcalculadas=zeros(DPcal,1);   %%Todas las P y todas las Q calculadas vector columna con el siguiente orde [P,Q]
 %Creando matrizes para almacenar los valores actualizados de magnitud y
 %angulo de tension
 %CREANDO VECTOR DE POTENCIAS INICIALES
@@ -157,13 +159,23 @@ for j=1:FN
         if N(j,2)==2||N(j,2)==1
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
-                JA(F,Q)=1; %Calcula valores de la matriz H
+                if j==t
+                    JA(F,Q)=1; %Calcula valores de la diagonal de la matriz H 
+                end
+                if j~=t
+                    JA(F,Q)=12; %Calcula valores de la triangula superior y inferior de la matriz H 
+                end                
             Q=1+Q;
              end
             end
             for t=1:FN 
                 if N(t,2)==2
-                    JA(F,Q)=2;% Calcula valores de la matriz N 
+                if j==t
+                    JA(F,Q)=2; %Calcula valores de la diagonal de la matriz N 
+                end
+                if j~=t
+                    JA(F,Q)=22; %Calcula valores de la triangula superior y inferior de la matriz N
+                end 
                     Q=1+Q;
              end
             end
@@ -177,13 +189,23 @@ for j=1:FN
         if N(j,2)==2
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
-                JA(F,Q)=3; %Calcula valores de la matriz J
+                if j==t
+                    JA(F,Q)=3; %Calcula valores de la diagonal de la matriz J
+                end
+                if j~=t
+                    JA(F,Q)=33; %Calcula valores de la triangula superior y inferior de la matriz J
+                end
             Q=1+Q;
              end
             end
             for t=1:FN 
                 if N(t,2)==2
-                    JA(F,Q)=4;% Calcula valores de la matriz L 
+                if j==t
+                    JA(F,Q)=4; %Calcula valores de la diagonal de la matriz L
+                end
+                if j~=t
+                    JA(F,Q)=44; %Calcula valores de la triangula superior y inferior de la matriz L
+                end
                     Q=1+Q;
              end
             end
@@ -209,5 +231,14 @@ VA=VAN;
 V0=V0N;
 deltaP
 JA %% Matriz jacobinana
-P
+Pn
+Po
 end
+for i=1:FN
+    for t=1:FN
+        Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
+        
+    end
+end
+Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
+Pcalculadas %% vector de potencias todas las potencias calculadas [P,Q]
