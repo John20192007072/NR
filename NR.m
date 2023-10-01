@@ -100,6 +100,7 @@ for j=1:FL
     Ybarra(M,M)=Ybarra(M,M)+1/Zkm+Yc;%Elementos de la diagonal
 end
 Ybarra
+
 V0=N(:,7);
 VA=N(:,8);
 VAN=VA;
@@ -119,11 +120,14 @@ for j=1 :FN  % Se crea la matriz de potencias y su dimencion depende de el # de 
         NPV=NPV+1;
     end
 end
+magnitud=(NPQ+NPV);
 P=zeros(FP,1);
 Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
-DPcal=(NPV+NPQ);
+
+Pcalculadas=zeros(magnitud,1);
+Qcalculadas=zeros(magnitud,1);
 %Creando matrizes para almacenar los valores actualizados de magnitud y
 %angulo de tension
 %CREANDO VECTOR DE POTENCIAS INICIALES
@@ -144,7 +148,14 @@ end
 %_______________________________
 i=1;% Contador para llevar la cuenta de los numeros que colocan en la matriz P
 F=1; %Controla la posicion de las filas del jacobiano
+m=1;
 for j=1:FN
+      if N(j,2)==1 || N(j,2)==2 
+  for t=1:FN
+       P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));
+  Pcalculadas(i,1)=P(i,1)+Pcalculadas(i,1);
+  end
+      end
     if N(j,2)==2||N(j,2)==1
         for t=1:FN
         P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));% hallando P calculada. El valor de p calculada queda en Pn y no en P
@@ -213,22 +224,36 @@ end
 %_______________________________
 
 for j=1:FN
+    if N(j,2)==1 || N(j,2)==2 
+       for t=1:FN  
+  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
+       end
+       m=m+1;
+    end
+
     if N(j,2)==2
          for t=1:FN
-         if real(Ybarra(j,t))~=0 && imag(Ybarra(j,t))~=0                                                                                     %Faltan restricciones
+                                                                                             %Faltan restricciones
          P(i,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
          Pn(i,1)=P(i,1)+Pn(i,1);
-            end
+            
          end   
          i=i+1;
     end
+
 end
 deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 deltaP
-JA %% Matriz jacobinana
+
+JA %% Matriz jacobinana1
 Pn
+Pcalculadas
+Qcalculadas
+%%c
+end
 Po
 end
 for i=1:FN
@@ -238,3 +263,4 @@ for i=1:FN
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
+
