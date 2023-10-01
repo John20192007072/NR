@@ -205,4 +205,5 @@ JA %% Matriz jacobinana1
 Pn
 Pcalculadas
 Qcalculadas
+%%c
 end
