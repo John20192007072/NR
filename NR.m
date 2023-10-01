@@ -150,6 +150,7 @@ i=1;% Contador para llevar la cuenta de los numeros que colocan en la matriz P
 F=1; %Controla la posicion de las filas del jacobiano
 m=1;
 for j=1:FN
+
         if N(j,2)==1 || N(j,2)==2 
        for t=1:FN  
   P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
@@ -231,6 +232,13 @@ end
 %_______________________________
 
 for j=1:FN
+    if N(j,2)==1 || N(j,2)==2 
+       for t=1:FN  
+  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
+       end
+       m=m+1;
+    end
 
 
     if N(j,2)==2
@@ -253,7 +261,7 @@ JA %% Matriz jacobinana1
 Pn
 Pcalculadas
 Qcalculadas
-%%c
+
 end
 Po
 for i=1:FN
