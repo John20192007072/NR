@@ -14,6 +14,34 @@ clc;clear;
 %     N(K,2)=input('');
 % end
 % for K=1:nodos
+% if N(K,2)==0
+%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+%     N(K,7)=input('');
+%     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
+%     N(K,8)=input('')
+% end 
+% if N(K,2)==1
+%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+%     N(K,7)=input('');
+%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+%     N(K,5)=input('');
+%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+%     N(K,6)=input('');
+%     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
+%     N(K,3)=input('');
+%     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
+%     N(K,4)=input('');
+% end 
+% if N(K,2)==2
+%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+%     N(K,5)=input('');
+%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+%     N(K,6)=input('');
+%     fprintf('ingrese la potencia activa generada (generacion distribuida) en el nodo %i:',K);
+%     N(K,3)=input('');
+%     fprintf('ingrese la potencia reactiva generada (generacion distribuida) en el nodo%i:',K);
+%     N(K,4)=input('');
+% end 
 %     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
 %     N(K,3)=input('');
 %     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
@@ -25,7 +53,7 @@ clc;clear;
 %     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
 %     N(K,7)=input('');
 %     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
-%     N(K,8)=input('');
+%     N(K,8)=input('');  
 % end
 % 
 % for k=1:lineas
@@ -97,6 +125,7 @@ P=zeros(FP,1);
 Pn=zeros(FP,1);
 Po=zeros(FP,1);
 JA=zeros(FP,FP);
+
 Pcalculadas=zeros(magnitud,1);
 Qcalculadas=zeros(magnitud,1);
 %Creando matrizes para almacenar los valores actualizados de magnitud y
@@ -129,10 +158,8 @@ for j=1:FN
       end
     if N(j,2)==2||N(j,2)==1
         for t=1:FN
-            if real(Ybarra(j,t))~=0 && imag(Ybarra(j,t))~=0                                                                                 %Con este if solo se corrige 1 excepcion faltan 3 para p y 3 para Q 
         P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));% hallando P calculada. El valor de p calculada queda en Pn y no en P
         Pn(i,1)=P(i,1)+Pn(i,1);
-            end
         end
         i=i+1;
     end
@@ -140,14 +167,23 @@ for j=1:FN
         if N(j,2)==2||N(j,2)==1
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
-               JA(F,Q)=1
-                 %Calcula valores de la matriz H
+                if j==t
+                    JA(F,Q)=-Qcalculadas(F,1)-imag(Ybarra(j,j))*(N(j,7))^2; %Calcula valores de la diagonal de la matriz H 
+                end
+                if j~=t
+                    JA(F,Q)=1; %Calcula valores de la triangula superior y inferior de la matriz H 
+                end                
             Q=1+Q;
              end
             end
             for t=1:FN 
                 if N(t,2)==2
-                    JA(F,Q)=2;% Calcula valores de la matriz N 
+                if j==t
+                    JA(F,Q)=2; %Calcula valores de la diagonal de la matriz N 
+                end
+                if j~=t
+                    JA(F,Q)=22; %Calcula valores de la triangula superior y inferior de la matriz N
+                end 
                     Q=1+Q;
              end
             end
@@ -161,13 +197,23 @@ for j=1:FN
         if N(j,2)==2
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
-                JA(F,Q)=3; %Calcula valores de la matriz J
+                if j==t
+                    JA(F,Q)=3; %Calcula valores de la diagonal de la matriz J
+                end
+                if j~=t
+                    JA(F,Q)=33; %Calcula valores de la triangula superior y inferior de la matriz J
+                end
             Q=1+Q;
              end
             end
             for t=1:FN 
                 if N(t,2)==2
-                    JA(F,Q)=4;% Calcula valores de la matriz L 
+                if j==t
+                    JA(F,Q)=4; %Calcula valores de la diagonal de la matriz L
+                end
+                if j~=t
+                    JA(F,Q)=44; %Calcula valores de la triangula superior y inferior de la matriz L
+                end
                     Q=1+Q;
              end
             end
@@ -201,9 +247,20 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 deltaP
+
 JA %% Matriz jacobinana1
 Pn
 Pcalculadas
 Qcalculadas
 %%c
 end
+Po
+end
+for i=1:FN
+    for t=1:FN
+        Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
+        
+    end
+end
+Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
+
