@@ -232,15 +232,6 @@ end
 %_______________________________
 
 for j=1:FN
-    if N(j,2)==1 || N(j,2)==2 
-       for t=1:FN  
-  P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
-  Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
-       end
-       m=m+1;
-    end
-
-
     if N(j,2)==2
          for t=1:FN
                                                                                              %Faltan restricciones
