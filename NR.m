@@ -157,10 +157,10 @@ for j=1:FN
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
                 if j==t
-                    JA(F,Q)=1; %Calcula valores de la diagonal de la matriz H 
+                    JA(F,Q)=-Qcalculadas(F,1)-imag(Ybarra(j,j))*(N(j,7))^2; %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
-                    JA(F,Q)=-Qcalculadas(F,1)-imag(Ybarra(j,j))*(N(j,7))^2; %Calcula valores de la triangula superior y inferior de la matriz H 
+                    JA(F,Q)=1; %Calcula valores de la triangula superior y inferior de la matriz H 
                 end                
             Q=1+Q;
              end
