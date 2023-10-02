@@ -75,18 +75,15 @@ clc;clear;
 Sbase=100;%MVA
 VB=230;%KV
 %[K M   Rkm     Xkm     Yc/2]
-L=[1 2 0.01008 0.05040 0.05125;
-    1 3 0.00744 0.03720 0.03875;
-    2 4 0.00744 0.03720 0.03875;
-    3 4 0.01272 0.06360 0.06375];
+L=[1 2 0.02 0.04 0;
+    1 3 0.01 0.03 0;
+    3 2 0.0125 0.025 0.06375];
 %T slack=0 PV=1 PQ=2
 %[K T Pgk Qgk Pck Qck    V    A]
-N=[1 0 0   0   50  30.990 1    0;
-    2 2 0   0   170 105.35 1    0;
-    3 2 0   0   200 123.94 1    0;
-    4 1 318 0   80  49.580 1.02 0];
+N=[1 0 0   0   0  0 1.05    0;
+    2 2 0   0   -4.5 2.5 1    0;
+    3 1 2   0   0 0 1.04    0;];
 %pgloo crow
-N(:,3:6)=N(:,3:6)/Sbase;
 N
 L
 FL= size(L,1);
@@ -279,4 +276,8 @@ for i=1:FN
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-
+%%El bueno
+inv(JA)
+deltaP
+deltasV=(inv(JA)*deltaP);
+deltasV
