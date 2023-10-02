@@ -77,10 +77,10 @@ VB=230;%KV
 %[K M   Rkm     Xkm     Yc/2]
 L=[1 2 0.02 0.04 0;
     1 3 0.01 0.03 0;
-    3 2 0.0125 0.025 0];
+    2 3 0.0125 0.025 0;];
 %T slack=0 PV=1 PQ=2
 %[K T Pgk Qgk Pck Qck    V    A]
-N=[1 0 0   0   0  0 1.05    0;
+N=[1 0 0   0   0 0 1.05    0;
     2 2 0   0   4 2.5 1    0;
     3 1 2   0   0 0 1.04    0;];
 %pgloo crow
@@ -102,8 +102,9 @@ V0=N(:,7);
 VA=N(:,8);
 VAN=VA;
 V0N=V0;
+error= input('Ingrese el error en los calculos ');
 iterMAX= input('Ingrese el número de iteraciones maximas para lograr el error: ');
-for t=1:iterMAX
+for X=1:iterMAX
 %Obteniendo la potencia activa y reactiva
 FP=0;        % # Filas de la matriz de potencias calculadas
 NPQ=0;       % # De nodos PQ
@@ -163,6 +164,7 @@ for j=1:FN
   Pcalculadas(i,1)=P(i,1)+Pcalculadas(i,1);
   end
       end
+      
     if N(j,2)==2||N(j,2)==1
         for t=1:FN
         P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));% hallando P calculada. El valor de p calculada queda en Pn y no en P
@@ -178,8 +180,7 @@ for j=1:FN
                     JA(F,Q)=-Qcalculadas(F,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
-                    JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz H 
-
+                   JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(N(j,8)-N(t,8))); %Calcula valores de la triangula superior y inferior de la matriz H 
                 end                
             Q=1+Q;
              end
@@ -192,7 +193,6 @@ for j=1:FN
                 end
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*((real(Ybarra(j,t)))*cos(N(j,8)-N(t,8))+imag(Ybarra(j,t)*sin(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz N crow
-
 
                 end 
                     Q=1+Q;
@@ -265,21 +265,21 @@ for j=1:FN
     end
 
 end
+
 deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
-deltaP
-JA %% Matriz jacobinana
-deltasV=(inv(JA)*deltaP);
+
 i=1;
+deltasV=(inv(JA)*deltaP);
 for j=1:FN
     if N(j,2)==2||N(j,2)==1
         Vant(i,1)=N(j,8);% hallando P calculada. El valor de p calculada queda en Pn y no en P
         N(j,8)=Vant(i,1)+deltasV(i,1);
         i=i+1;
     end
-    
 end
+
 for j=1:FN
     if N(j,2)==2
         Vant(i,1)=N(j,7);% hallando P calculada. El valor de p calculada queda en Pn y no en P
@@ -288,18 +288,16 @@ for j=1:FN
     end
     
 end
-
+if max(abs(deltasV))<error
+    break
 end
-for i=1:FN
-    for t=1:FN
-        Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
-    end
 end
-Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-Po
-Pn
-deltaP
-
+% Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
+% Po
+% Pn
+% deltaP
+JA
 deltasV
-Vant
-N
+error
+% Vant
+% N
