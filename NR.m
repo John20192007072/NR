@@ -227,12 +227,19 @@ for j=1:FN
             end
             
         end
+
+        lt=1;
+
         
+
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
                     JA(F,Q)=Qcalculadas(lt,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz L
                 end
+
+                lt=lt+1;
+
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz L 
 
@@ -264,18 +271,11 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 deltaP
-
 JA %% Matriz jacobinana1
-Pn
-Pcalculadas
-Qcalculadas
-
 end
-Po
 for i=1:FN
     for t=1:FN
         Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
-        
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
