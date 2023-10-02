@@ -290,14 +290,13 @@ end
 if max(abs(deltasV))<error
     fprintf ("El problema converge en la iteraciòn # %i",X);
       
-    for j=1:FN
+    
     if N(j,2)==0
        for b=1:FN  
-  Ns=(-1)*(N(j,7)*N(b,7)*abs(Ybarra(j,b))*sin(N(b,8)-N(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Ns=(N(b,7)^2)*abs(Ybarra(b,b))*sin(N(b,8)-N(b,8)+angle(Ybarra(b,b)));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
   Qs=Ns+Qs;
        end
-    end
-    end
+           end
     break
 end
 
