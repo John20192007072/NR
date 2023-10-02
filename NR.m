@@ -1,5 +1,5 @@
 clc;clear;
-
+%sad
 %e=input('ingrese el error maximo');
 %iterMAX=input('Ingrese el número de iteraciones maximas para lograr el error');
 % nodos=input('Ingrese número de nodos:');
