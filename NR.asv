@@ -277,7 +277,6 @@ end
 for j=1:FN
     if N(j,2)==2
         Vant(i,1)=N(j,7);% hallando P calculada. El valor de p calculada queda en Pn y no en P
-        N(j,7)=Vant(i,1)+deltasV(i,1);
         i=i+1;
     end
     
@@ -290,6 +289,8 @@ for i=1:FN
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
+%%El bueno
+inv(JA)
 Po
 Pn
 deltaP
