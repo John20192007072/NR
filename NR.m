@@ -102,6 +102,9 @@ V0=N(:,7);
 VA=N(:,8);
 VAN=VA;
 V0N=V0;
+
+Ns=0;
+Qs=0;
 error= input('Ingrese el error en los calculos ');
 iterMAX= input('Ingrese el número de iteraciones maximas para lograr el error: ');
 for X=1:iterMAX
@@ -156,8 +159,11 @@ for j=1:FN
   P(m,1)=(-1)*(N(j,7)*N(t,7)*abs(Ybarra(j,t))*sin(N(t,8)-N(j,8)+angle(Ybarra(j,t))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
   Qcalculadas(m,1)=P(m,1)+Qcalculadas(m,1);
        end
+       
        m=m+1;
-    end
+        end
+         
+
       if N(j,2)==1 || N(j,2)==2 
   for t=1:FN
        P(i,1)=N(j,7)*N(t,7)*abs(Ybarra(j,t))*cos(N(t,8)-N(j,8)+angle(Ybarra(j,t)));
@@ -228,15 +234,12 @@ for j=1:FN
 
         lt=1;
 
-        
-
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
                     JA(F,Q)=Qcalculadas(lt,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz L
                 end
-
-                lt=lt+1;
+    lt=lt+1;
 
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz L 
@@ -270,6 +273,7 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 
+
 i=1;
 deltasV=(inv(JA)*deltaP);
 for j=1:FN
@@ -289,15 +293,35 @@ for j=1:FN
     
 end
 if max(abs(deltasV))<error
+    fprintf ("El problema converge en la iteraciòn # %i",X);
+      
+    for j=1:FN
+    if N(j,2)==0
+       for b=1:FN  
+  Ns=(-1)*(N(j,7)*N(b,7)*abs(Ybarra(j,b))*sin(N(b,8)-N(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Qs=Ns+Qs;
+       end
+    end
+
+    end
     break
 end
+
 end
+
+
 % Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
 % Po
 % Pn
 % deltaP
-JA
+
+Qcalculadas
 deltasV
-error
+if max(abs(deltasV))>error
+
+fprintf("el problema no converge, con ese nùmero de iteraciones, las respuesta mostrada se encuentra en la iteración %i", X);
+end
+Qs 
+
 % Vant
 % N
