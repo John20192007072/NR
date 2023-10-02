@@ -102,6 +102,7 @@ V0=N(:,7);
 VA=N(:,8);
 VAN=VA;
 V0N=V0;
+
 Ns=0;
 Qs=0;
 error= input('Ingrese el error en los calculos ');
@@ -230,13 +231,16 @@ for j=1:FN
             end
             
         end
+
         lt=1;
+
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
                     JA(F,Q)=Qcalculadas(lt,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz L
                 end
-                lt=lt+1;
+    lt=lt+1;
+
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz L 
 
@@ -269,6 +273,7 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 
+
 i=1;
 deltasV=(inv(JA)*deltaP);
 for j=1:FN
@@ -297,16 +302,19 @@ if max(abs(deltasV))<error
   Qs=Ns+Qs;
        end
     end
+
     end
     break
 end
 
 end
 
+
 % Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
 % Po
 % Pn
 % deltaP
+
 Qcalculadas
 deltasV
 if max(abs(deltasV))>error
@@ -314,5 +322,6 @@ if max(abs(deltasV))>error
 fprintf("el problema no converge, con ese nùmero de iteraciones, las respuesta mostrada se encuentra en la iteración %i", X);
 end
 Qs 
+
 % Vant
 % N
