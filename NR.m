@@ -1,5 +1,5 @@
 clc;clear;
-
+%sad
 %e=input('ingrese el error maximo');
 %iterMAX=input('Ingrese el número de iteraciones maximas para lograr el error');
 % nodos=input('Ingrese número de nodos:');
@@ -149,6 +149,7 @@ end
 i=1;% Contador para llevar la cuenta de los numeros que colocan en la matriz P
 F=1; %Controla la posicion de las filas del jacobiano
 m=1;
+
 for j=1:FN
 
         if N(j,2)==1 || N(j,2)==2 
@@ -180,6 +181,7 @@ for j=1:FN
                 end
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz H 
+
                 end                
             Q=1+Q;
              end
@@ -187,10 +189,13 @@ for j=1:FN
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
-                    JA(F,Q)=2; %Calcula valores de la diagonal de la matriz N crow
+
+                    JA(F,Q)=Pcalculadas(F,1)+real(Ybarra(j,j))*(N(j,7)^2); %Calcula valores de la diagonal de la matriz N crow
                 end
                 if j~=t
-                    JA(F,Q)=22; %Calcula valores de la triangula superior y inferior de la matriz N crow
+                    JA(F,Q)=N(j,7)*N(t,7)*((real(Ybarra(j,t)))*cos(N(j,8)-N(t,8))+imag(Ybarra(j,t)*sin(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz N crow
+
+
                 end 
                     Q=1+Q;
              end
@@ -200,39 +205,47 @@ for j=1:FN
         
 end
 %_______________________________
+
 for j=1:FN
         Q=1;   %Controla la posicion de las columnas del jacobiano
+        
         if N(j,2)==2
+            o=1;
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
+
+                
                 if j==t
-                    JA(F,Q)=3; %Calcula valores de la diagonal de la matriz J crow
+                    JA(F,Q)=Pcalculadas(o,1)-real(Ybarra(j,j))*(N(j,7)^2); %Calcula valores de la diagonal de la matriz J crow
                 end
+                  o=o+1;
                 if j~=t
-                    JA(F,Q)=33; %Calcula valores de la triangula superior y inferior de la matriz J crow
+                    JA(F,Q)=-N(j,7)*N(t,7)*((real(Ybarra(j,t)))*cos(N(j,8)-N(t,8))+imag(Ybarra(j,t)*sin(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz J crow
                 end
             Q=1+Q;
-             end
+         
+            end
+            
         end
-        lt=1; 
+        lt=1;
             for t=1:FN 
                 if N(t,2)==2
-                   
                 if j==t
-
                     JA(F,Q)=Qcalculadas(lt,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz L
-                   
                 end
-                lt=lt+1
+                lt=lt+1;
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz L 
+
                 end
                     Q=1+Q;
+                    
              end
             end
            F=F+1;
+             
         end 
-        
+       
 end
 %_______________________________
 
@@ -252,20 +265,12 @@ deltaP=Po-Pn;
 VA=VAN;
 V0=V0N;
 deltaP
-
 JA %% Matriz jacobinana1
-Pn
-Pcalculadas
-Qcalculadas
-
 end
-Po
 for i=1:FN
     for t=1:FN
         Ybarra(i,t)=abs(Ybarra(i,t))+angle(Ybarra(i,t))*1j; 
-        
     end
 end
 Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-%pegu
 
