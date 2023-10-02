@@ -180,7 +180,8 @@ for j=1:FN
                     JA(F,Q)=-Qcalculadas(F,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz H 
                 end
                 if j~=t
-                    JA(F,Q)=1; %Calcula valores de la triangula superior y inferior de la matriz H 
+                    JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz H 
+
                 end                
             Q=1+Q;
              end
@@ -188,10 +189,13 @@ for j=1:FN
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
+
                     JA(F,Q)=Pcalculadas(F,1)+real(Ybarra(j,j))*(N(j,7)^2); %Calcula valores de la diagonal de la matriz N crow
                 end
                 if j~=t
                     JA(F,Q)=N(j,7)*N(t,7)*((real(Ybarra(j,t)))*cos(N(j,8)-N(t,8))+imag(Ybarra(j,t)*sin(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz N crow
+
+
                 end 
                     Q=1+Q;
              end
@@ -209,6 +213,7 @@ for j=1:FN
             o=1;
         for t=1:FN   
             if N(t,2)==2||N(t,2)==1
+
                 
                 if j==t
                     JA(F,Q)=Pcalculadas(o,1)-real(Ybarra(j,j))*(N(j,7)^2); %Calcula valores de la diagonal de la matriz J crow
@@ -226,10 +231,11 @@ for j=1:FN
             for t=1:FN 
                 if N(t,2)==2
                 if j==t
-                    JA(F,Q)=4; %Calcula valores de la diagonal de la matriz L
+                    JA(F,Q)=Qcalculadas(lt,1)-(imag(Ybarra(j,j))*(N(j,7))^2); %Calcula valores de la diagonal de la matriz L
                 end
                 if j~=t
-                    JA(F,Q)=44; %Calcula valores de la triangula superior y inferior de la matriz L 
+                    JA(F,Q)=N(j,7)*N(t,7)*(real(Ybarra(j,t))*sin(N(j,8)-N(t,8))-imag(Ybarra(j,t))*cos(angle(N(j,8)-N(t,8)))); %Calcula valores de la triangula superior y inferior de la matriz L 
+
                 end
                     Q=1+Q;
                     
