@@ -289,7 +289,7 @@ end
 % Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
 % Po
 % Pn
-% deltaP
+deltaP
 JA
 deltasV
 error
