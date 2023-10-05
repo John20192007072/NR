@@ -2,88 +2,88 @@ clc;clear;
 %sad
 %e=input('ingrese el error maximo');
 %iterMAX=input('Ingrese el número de iteraciones maximas para lograr el error');
-% nodos=input('Ingrese número de nodos:');
-% lineas=input('Ingrese número de ramas:');
-% L=zeros(lineas,5);
-% N=zeros(nodos,8);
-% for K=1:nodos
-%     N(K,1)=K;
-% end
-% for K=1:nodos
-%     fprintf(['ingrese que tipo de nodo (slack=0 PV=1 PQ=2) es el nodo %i\n'],K);
-%     N(K,2)=input('');
-% end
-% for K=1:nodos
-% if N(K,2)==0
-%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
-%     N(K,7)=input('');
-%     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
-%     N(K,8)=input('')
-% end 
-% if N(K,2)==1
-%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
-%     N(K,7)=input('');
-%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
-%     N(K,5)=input('');
-%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
-%     N(K,6)=input('');
-%     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
-%     N(K,3)=input('');
-%     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
-%     N(K,4)=input('');
-% end 
-% if N(K,2)==2
-%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
-%     N(K,5)=input('');
-%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
-%     N(K,6)=input('');
-%     fprintf('ingrese la potencia activa generada (generacion distribuida) en el nodo %i:',K);
-%     N(K,3)=input('');
-%     fprintf('ingrese la potencia reactiva generada (generacion distribuida) en el nodo%i:',K);
-%     N(K,4)=input('');
-% end 
-%     fprintf('ingrese la potencia activa generada en el nodo %i:',K);
-%     N(K,3)=input('');
-%     fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
-%     N(K,4)=input('');
-%     fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
-%     N(K,5)=input('');
-%     fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
-%     N(K,6)=input('');
-%     fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
-%     N(K,7)=input('');
-%     fprintf('ingrese el angulo de la tension en el nodo %i:',K);
-%     N(K,8)=input('');  
-% end
-% 
-% for k=1:lineas
-% fprintf('para la rama %i ingrese los nodos donde se conecta \n',k);
-% fprintf('ingrese el nodo inicial:');
-% L(k,1)=input('');
-% fprintf('ingrese el nodo Final:');
-% L(k,2)=input('');
-% end
-% for k=1:lineas
-% fprintf('para la rama %i ingrese la conductancía\n',k);
-% L(k,3)=input('');
-% fprintf('para la rama %i ingrese la suceptancia\n',k);
-% L(k,4)=input('');
-% fprintf('para la rama %i ingrese el valor de Yc/2 \n',k);
-% L(k,5)=input('');
-% end
+nodos=input('Ingrese número de nodos:');
+lineas=input('Ingrese número de ramas:');
+L=zeros(lineas,5);
+N=zeros(nodos,8);
+for K=1:nodos
+    N(K,1)=K;
+end
+for K=1:nodos
+    fprintf(['ingrese que tipo de nodo (slack=0 PV=1 PQ=2) es el nodo %i\n'],K);
+    N(K,2)=input('');
+end
+for K=1:nodos
+if N(K,2)==0
+    fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+    N(K,7)=input('');
+    fprintf('ingrese el angulo de la tension en el nodo %i:',K);
+    N(K,8)=input('')
+end 
+if N(K,2)==1
+    fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+    N(K,7)=input('');
+    fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+    N(K,5)=input('');
+    fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+    N(K,6)=input('');
+    fprintf('ingrese la potencia activa generada en el nodo %i:',K);
+    N(K,3)=input('');
+    fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
+    N(K,4)=input('');
+end 
+if N(K,2)==2
+    fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+    N(K,5)=input('');
+    fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+    N(K,6)=input('');
+    fprintf('ingrese la potencia activa generada (generacion distribuida) en el nodo %i:',K);
+    N(K,3)=input('');
+    fprintf('ingrese la potencia reactiva generada (generacion distribuida) en el nodo%i:',K);
+    N(K,4)=input('');
+end 
+    fprintf('ingrese la potencia activa generada en el nodo %i:',K);
+    N(K,3)=input('');
+    fprintf('ingrese la potencia reactiva generada en el nodo%i:',K);
+    N(K,4)=input('');
+    fprintf('ingrese la potencia activa demandada en el nodo %i:',K);
+    N(K,5)=input('');
+    fprintf('ingrese la potencia reactiva demandada en el nodo %i:',K);
+    N(K,6)=input('');
+    fprintf('ingrese la magnitud de la tension en el nodo %i:',K);
+    N(K,7)=input('');
+    fprintf('ingrese el angulo de la tension en el nodo %i:',K);
+    N(K,8)=input('');  
+end
+
+for k=1:lineas
+fprintf('para la rama %i ingrese los nodos donde se conecta \n',k);
+fprintf('ingrese el nodo inicial:');
+L(k,1)=input('');
+fprintf('ingrese el nodo Final:');
+L(k,2)=input('');
+end
+for k=1:lineas
+fprintf('para la rama %i ingrese la conductancía\n',k);
+L(k,3)=input('');
+fprintf('para la rama %i ingrese la suceptancia\n',k);
+L(k,4)=input('');
+fprintf('para la rama %i ingrese el valor de Yc/2 \n',k);
+L(k,5)=input('');
+end
 % L
-Sbase=100;%MVA
-VB=230;%KV
-%[K M   Rkm     Xkm     Yc/2]
-L=[1 2 0.02 0.04 0;
-    1 3 0.01 0.03 0;
-    2 3 0.0125 0.025 0;];
-%T slack=0 PV=1 PQ=2
-%[K T Pgk Qgk Pck Qck    V    A]
-N=[1 0 0   0   0 0 1.05    0;
-    2 2 0   0   4 2.5 1    0;
-    3 1 2   0   0 0 1.04    0;];
-%pgloo crow
+% Sbase=100;%MVA
+% VB=230;%KV
+% %[K M   Rkm     Xkm     Yc/2]
+% L=[1 2 0.02 0.04 0;
+%     1 3 0.01 0.03 0;
+%     2 3 0.0125 0.025 0;];
+% %T slack=0 PV=1 PQ=2
+% %[K T Pgk Qgk Pck Qck    V    A]
+% N=[1 0 0   0   0 0 1.05    0;
+%     2 2 0   0   4 2.5 1    0;
+%     3 1 2   0   0 0 1.04    0;];
+% %pgloo crow
 
 FL= size(L,1);
 FN= size(N,1);
@@ -103,6 +103,8 @@ VAN=VA;
 V0N=V0;
 Ns=0;
 Qs=0;
+Ps=0;
+QPV=0;
 error= input('Ingrese el error en los calculos ');
 iterMAX= input('Ingrese el número de iteraciones maximas para lograr el error: ');
 for X=1:iterMAX
@@ -288,15 +290,54 @@ for j=1:FN
 end
 if max(abs(deltasV))<error
     fprintf ("El problema converge en la iteraciòn # %i\n",X);
-      
+      %%calculo de Q para nodos Slag
     for j=1:FN
     if N(j,2)==0
        for b=1:FN  
   Ns=(-1)*(N(j,7)*N(b,7)*abs(Ybarra(j,b))*sin(N(b,8)-N(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
   Qs=Ns+Qs;
        end
+       if Qs>0
+ N(j,4)=Qs;
+       
+    else 
+ N(j,6)=Qs;
+
+       end
     end
     end
+     %%calculo de P para nodos Slag
+for j=1:FN
+    if N(j,2)==0
+       for b=1:FN  
+  Ns=(N(j,7)*N(b,7)*abs(Ybarra(j,b))*cos(N(b,8)-N(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Ps=Ns+Ps;
+       end
+       if Qs>0
+ N(j,3)=Ps;
+       
+    else 
+ N(j,5)=Ps;
+
+       end
+    end
+end
+for j=1:FN
+    if N(j,2)==1
+       for b=1:FN  
+  Ns=(-1)*(N(j,7)*N(b,7)*abs(Ybarra(j,b))*sin(N(b,8)-N(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  QPV=(Ns+QPV);
+       end
+       if QPV>0
+ N(j,4)=QPV;
+       
+    else 
+ N(j,6)=QPV;
+
+       end
+    end
+end
+
     break
 end
 
@@ -306,22 +347,28 @@ fprintf("Solucion por el mètodo de NR clasico\n");
 % Po
 % Pn
 % deltaP
-Qcalculadas
-deltasV
+
+
 if max(abs(deltasV))>error
 
 fprintf("el problema no converge, con ese nùmero de iteraciones, las respuesta mostrada se encuentra en la iteración %i\n", X);
 end
-Qs 
+deltasV
 Vfinal=deltasV+Vant
-% Vant
-% N
+fprintf("      #   Tipo de Nodo   P.G      Q.G.         P.D     Q.D        V      Angulo      ");
+N
+
+%---------------------------
+%NR Desacoplado rapido
+
 V0=wy(:,7);
 VA=wy(:,8);
 VAN=VA;
 V0N=V0;
 Ns=0;
 Qs=0;
+Ps=0;
+QPV=0;
 for X=1:iterMAX
 %Obteniendo la potencia activa y reactiva
 FP=0;        % # Filas de la matriz de potencias calculadas
@@ -510,36 +557,77 @@ if max(abs(deltasV))<error
   Ns=(-1)*(wy(j,7)*wy(b,7)*abs(Ybarra(j,b))*sin(wy(b,8)-wy(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
   Qs=Ns+Qs;
        end
+       if Qs>0
+ wy(j,4)=Qs;
+       
+    else 
+ wy(j,6)=Qs;
+
+       
+       end
+
     end
     end
+ %%calculo de P para nodos Slag
+for j=1:FN
+    if wy(j,2)==0
+       for b=1:FN  
+  Ns=(wy(j,7)*wy(b,7)*abs(Ybarra(j,b))*cos(wy(b,8)-wy(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Ps=Ns+Ps;
+       end
+       if Qs>0
+ wy(j,3)=Ps;
+       
+    else 
+ wy(j,5)=Ps;
+
+       end
+    end
+end
+for j=1:FN
+    if wy(j,2)==1
+       for b=1:FN  
+  Ns=(-1)*(wy(j,7)*wy(b,7)*abs(Ybarra(j,b))*sin(wy(b,8)-wy(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  QPV=(Ns+QPV);
+       end
+       if QPV>0
+ wy(j,4)=QPV;
+       
+    else 
+ wy(j,6)=QPV;
+
+       end
+    end
+end
     break
 end
 
 end
 
-% Ybarra %% Ybarra en polares con la estructura (magnitud)+(angulo)j
-% Po
-% Pn
-% deltaP
-Qcalculadas
-deltasV
+
 if max(abs(deltasV))>error
 fprintf("Solucion por el mètodo de NR desacoplado rapido\n")
 fprintf("el problema no converge, con ese nùmero de iteraciones, las respuesta mostrada se encuentra en la iteración %i\n", X);
 end
-Qs 
 
-% Vant
-% wy
-%crow
-
+deltasV
 VFinish=Vant+deltasV
+fprintf("      #   Tipo de Nodo   P.G      Q.G.         P.D     Q.D        V      Angulo      ");
+wy
+
+
+%-------
+% NR desacoplado
+
+
 V0=U(:,7);
 VA=U(:,8);
 VAN=VA;
 V0N=V0;
 Ns=0;
 Qs=0;
+Ps=0;
+QPV=0;
 for X1=1:iterMAX
 %Obteniendo la potencia activa y reactiva
 FP=0;        % # Filas de la matriz de potencias calculadas
@@ -752,9 +840,47 @@ if max(abs(deltasV))<error
   Ns=(-1)*(U(j,7)*U(b,7)*abs(Ybarra(j,b))*sin(U(b,8)-U(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
   Qs=Ns+Qs;
        end
-    end
+       if Qs>0
+ U(j,4)=Qs;
+       
+    else 
+ U(j,6)=Qs;
 
+       
     end
+    end
+    end
+      %%calculo de P para nodos Slag
+for j=1:FN
+    if U(j,2)==0
+       for b=1:FN  
+  Ns=(U(j,7)*U(b,7)*abs(Ybarra(j,b))*cos(U(b,8)-U(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  Ps=Ns+Ps;
+       end
+       if Qs>0
+ U(j,3)=Ps;
+       
+    else 
+ U(j,5)=Ps;
+
+       end
+    end
+end
+for j=1:FN
+    if U(j,2)==1
+       for b=1:FN  
+  Ns=(-1)*(U(j,7)*U(b,7)*abs(Ybarra(j,b))*sin(U(b,8)-U(j,8)+angle(Ybarra(j,b))));%Hallando Q calculada. El valor de Q calculada queda en Pn y no en P
+  QPV=(Ns+QPV);
+       end
+       if QPV>0
+ U(j,4)=QPV;
+       
+    else 
+ U(j,6)=QPV;
+
+       end
+    end
+end
     break
 end
 
@@ -764,13 +890,13 @@ end
 % Pn
 % deltaP
 
-Qcalculadas
-deltasV
+%Qcalculadas
+
 if max(abs(deltasV))>error
    fprintf("Método de NR desacoplado\n");
 fprintf("el problema no converge, con ese nùmero de iteraciones, las respuesta mostrada se encuentra en la iteración %i\n", X1);
 end
-Qs 
+deltasV
 VFinish=Vant+deltasV
-% Vant
-% U
+fprintf("      #   Tipo de Nodo   P.G      Q.G.         P.D     Q.D        V      Angulo      ");
+ U
